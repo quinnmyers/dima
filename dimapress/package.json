@@ -10,6 +10,7 @@
     "@gridsome/source-wordpress": "^0.1.0",
     "gridsome": "^0.3.0",
     "node-sass": "^4.10.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "vue2-smooth-scroll": "^1.0.3"
   }
 }

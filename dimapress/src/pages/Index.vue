@@ -1,5 +1,6 @@
 <template>
-  <Layout :layoutSectionArray="sectionArray" v-if='isMounted'>
+  <Layout :layoutSectionArray="sectionArray" :loadNav="loadNav" v-if='isMounted'>
+    <app-landing @loadnav='loadFullNav'></app-landing>
     <section v-for='(section,index) in sections' 
             :key="index"
             :class="createSectionClass(section.name)"
@@ -94,16 +95,19 @@
 import { Pager } from "gridsome";
 import Contact from "./components/Contact.vue";
 import CurriculumVitae from "./components/CurriculumVitae.vue";
+import Landing from "./components/Landing.vue";
 
 export default {
   components: {
     Pager,
     appContact: Contact,
-    appCurriculumVitae: CurriculumVitae
+    appCurriculumVitae: CurriculumVitae,
+    appLanding: Landing
   },
   data() {
     return {
       isMounted: false,
+      loadNav: false,
       sectionHeights: [],
       sectionArray: [],
       sections: []
@@ -170,17 +174,14 @@ export default {
 
       this.sections = mainobj;
       console.log("section", this.sections);
+    },
+    loadFullNav() {
+      this.loadNav = true;
     }
   },
   mounted() {
     this.pushPosts(this.$page);
     console.log(this.$page);
-
-    // console.log(
-    //   this.$page.allWordPressVisualDevelopment.edges[1].node.featuredMedia.url
-    //     .src
-    // );
-
     this.isMounted = true;
     this.$nextTick(this.measureSectionHeader);
     this.$nextTick(this.measureAllElements);

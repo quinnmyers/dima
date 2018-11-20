@@ -3,9 +3,14 @@
   <app-head></app-head>
    <div class="content">
     <div class="layout">
+        <div class="line" ref="navline"></div>
         <header class="layout__header" ref="header">
             <!-- <g-link :to="{ name: 'home' }">Gridsome</g-link> -->
-          <nav class="layout__header__nav">
+          <nav class="layout__header__nav" ref='mainnav'>
+            <div class="layout__header__nav__brand" ref="navbrand">
+              <h2 class="dima"><span class="underline">D</span>ima</h2>
+              <h2 class="duchet"><span class="underline">D</span>uchet</h2>
+            </div>
             <ul class="layout__header__nav__desktopnav">
               <li class="layout__header__nav__desktopnav__navitem"
                   v-for='(n, index) in navItems'
@@ -35,7 +40,7 @@
             <span class="line3"></span>
           </button>
         <div class="pages">
-          <slot @testEvent='testFunction'/>
+          <slot/>
         </div>
       </div>
   </div>
@@ -47,7 +52,7 @@
 import Head from "./Base/Head.vue";
 
 export default {
-  props: ["layoutSectionArray"],
+  props: ["layoutSectionArray", "loadNav"],
   components: {
     appHead: Head
   },
@@ -112,6 +117,9 @@ export default {
     };
   },
   methods: {
+    loadFullNav() {
+      console.log("from papapappapapapa default layout nav");
+    },
     buildNavUrl(str) {
       const urlPath = `#${str.replace(/\s/g, "").toLowerCase()}`;
       return urlPath;
@@ -162,8 +170,8 @@ export default {
         let currentSectionPercent = this.percentArray[0];
         let differenceOfPercent = 100 / currentSectionPercent;
         let adjustedScrollPosition = p * differenceOfPercent;
-        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        targetExpansionDiv.style.width = `100%`;
+        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        // targetExpansionDiv.style.width = `100%`;
       } else if (
         p >= this.startEndArray[1].start &&
         p <= this.startEndArray[1].end
@@ -175,8 +183,8 @@ export default {
         let adjustedScrollPosition =
           p * differenceOfPercent - startingPoint * differenceOfPercent;
         console.log("you are in the second section");
-        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        targetExpansionDiv.style.width = `100%`;
+        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        // targetExpansionDiv.style.width = `100%`;
       } else if (
         p >= this.startEndArray[2].start &&
         p <= this.startEndArray[2].end
@@ -187,8 +195,8 @@ export default {
         let differenceOfPercent = 100 / currentSectionPercent;
         let adjustedScrollPosition =
           p * differenceOfPercent - startingPoint * differenceOfPercent;
-        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        targetExpansionDiv.style.width = `100%`;
+        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        // targetExpansionDiv.style.width = `100%`;
         console.log("you are in the THIRD section");
       } else if (
         p >= this.startEndArray[3].start &&
@@ -200,8 +208,8 @@ export default {
         let differenceOfPercent = 100 / currentSectionPercent;
         let adjustedScrollPosition =
           p * differenceOfPercent - startingPoint * differenceOfPercent;
-        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        targetExpansionDiv.style.width = `100%`;
+        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        // targetExpansionDiv.style.width = `100%`;
         console.log("you are in the FOURTH section");
       } else if (
         p >= this.startEndArray[4].start &&
@@ -213,8 +221,8 @@ export default {
         let differenceOfPercent = 100 / currentSectionPercent;
         let adjustedScrollPosition =
           p * differenceOfPercent - startingPoint * differenceOfPercent;
-        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        targetExpansionDiv.style.width = `100%`;
+        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        // targetExpansionDiv.style.width = `100%`;
         console.log("you are in the FIFTH section");
       }
     },
@@ -239,6 +247,18 @@ export default {
         document.body.style.height = "auto";
         document.body.style.overflow = "auto";
       }
+    },
+    loadLine() {
+      this.$refs.navline.classList.add("line-loaded");
+    },
+    loadHeader() {
+      this.$refs.header.classList.add("header-loaded");
+    },
+    loadFullNav() {
+      setTimeout(() => {
+        this.$refs.mainnav.classList.add("mainnav-full");
+        this.$refs.navbrand.classList.add("navbrand-full");
+      }, 250);
     }
   },
   watch: {
@@ -248,6 +268,9 @@ export default {
         .reduce((a, b) => a + b, 0);
       console.log(`total from reduce: ${this.totalSectionHeight}`);
       this.calculatePercents();
+    },
+    loadNav: function() {
+      this.loadFullNav();
     }
   },
   mounted() {
@@ -258,6 +281,10 @@ export default {
       window.addEventListener("scroll", this.determineScrollLocation)
       //this.throttle(this.determineScrollLocation, 25)
     );
+    this.$nextTick(this.loadLine);
+    setTimeout(() => {
+      this.$nextTick(this.loadHeader);
+    }, 1500);
   }
 };
 </script>
@@ -278,6 +305,17 @@ html
       @include edgesnap 
         width: 100%
 
+.line-loaded
+  height: 100vh !important
+
+.line 
+  display: flex
+  background: black
+  width: 5px 
+  height: 0px
+  position: sticky
+  top: 0
+  transition: all 1.5s ease-in-out
 
 .header-expanded 
   // display: flex !important
@@ -289,6 +327,8 @@ html
   display: flex
   height: 100%
   width: 100%
+  .header-loaded 
+    transform: rotateY(0deg)
   &__header 
     display: block
     flex-direction: column
@@ -297,8 +337,10 @@ html
     top: 0
     width: 225px 
     height: 100vh
-    border-left: 5px solid black
-    transition: all 0.5s ease
+    //border-left: 5px solid black
+    transition: all 1s ease
+    transform: rotateY(90deg)
+    transform-origin: top left
     @include tablet-portrait 
       width: 180px
     @include navsnap 
@@ -307,13 +349,27 @@ html
       position: fixed
       margin: auto
       top: 0
+    .mainnav-full 
+      justify-content: space-between
     &__nav 
       //main container for nav
       display: flex 
+      justify-content: space-between
       width: 100% 
       flex-direction: column
       height: 100%
+      transition: all .3s ease
       //padding and margins for both lists of navitems
+      .navbrand-full 
+        // opacity: 1
+      &__brand 
+        margin-left: 20px
+        font-size: 2rem
+        // opacity: 0
+        // transition: all .3s ease
+        .underline 
+          text-decoration: underline 
+          text-decoration-color: $accent
       &__desktopnav, &__subnav
         list-style: none 
         .navitem-text 
@@ -334,14 +390,14 @@ html
           display: flex 
           flex-direction: column
           align-self: flex-start
-          font-family: $serif
+          font-family: $sans-serif
           text-decoration: none
           font-size: 1.1rem
-          //background: orange
+          color: black
           &:nth-child(1)
-            color: blue 
+            color: black
           &:nth-last-child(1)
-            color: purple 
+            color: black
           @include tablet-portrait 
             font-size: 11pt
       &__subnav
@@ -354,11 +410,11 @@ html
           display: flex 
           flex-direction: column 
           align-self: flex-start
-          //background: yellow
+          color: black
           &:nth-child(1)
-            color: blue 
+            color: black
           &:nth-last-child(1)
-            color: purple
+            color: black
           @include tablet-portrait
             font-size: 0.85rem
   .mobile__nav__expander
