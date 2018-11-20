@@ -28,6 +28,13 @@ export default {
       this.outroText();
       this.loadFullNav();
     }, 1800);
+
+    setTimeout(() => {
+      window.scroll({
+        top: window.innerHeight,
+        behavior: "smooth"
+      });
+    }, 3000);
   }
 };
 </script>
