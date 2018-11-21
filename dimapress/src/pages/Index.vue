@@ -9,7 +9,7 @@
             :data-key="index"
             >
             <h2 class="section--header"
-                ref='sectionheader'>{{ section.name }}</h2>
+                ref='sectionheader'>{{ section.name | unCamelCase}}</h2>
       <div class="image__container" 
            ref='imagecontainer'>
         <div v-for="(image, index) in section.image" :key="index">
@@ -22,7 +22,7 @@
     </section>
     <section class="about">
       <h2 class="section--header">About</h2>
-      <p class="about--text content--section">Eu ullamco fugiat veniam anim id nostrud nostrud do eu aliquip. Tempor deserunt ex nisi dolore labore exercitation id id sit culpa cupidatat. Magna aliquip elit elit ea mollit amet voluptate. Adipisicing est in commodo consectetur. Tempor Lorem incididunt dolore commodo consequat. Eu ullamco fugiat veniam anim id nostrud nostrud do eu aliquip. Tempor deserunt ex nisi dolore labore exercitation id id sit culpa cupidatat. Magna aliquip elit elit ea mollit amet voluptate. Adipisicing est in commodo consectetur. Tempor Lorem incididunt dolore commodo consequat. Eu ullamco fugiat veniam anim id nostrud nostrud do eu aliquip. Tempor deserunt ex nisi dolore labore exercitation id id sit culpa cupidatat. Magna aliquip elit elit ea mollit amet voluptate. Adipisicing est in commodo consectetur. Tempor Lorem incididunt dolore commodo consequat. Eu ullamco fugiat veniam anim id nostrud nostrud do eu aliquip. Tempor deserunt ex nisi dolore labore exercitation id id sit culpa cupidatat. Magna aliquip elit elit ea mollit amet voluptate. Adipisicing est in commodo consectetur. Tempor Lorem incididunt dolore commodo consequat. Eu ullamco fugiat veniam anim id nostrud nostrud do eu aliquip. Tempor deserunt ex nisi dolore labore exercitation id id sit culpa cupidatat. Magna aliquip elit elit ea mollit amet voluptate. Adipisicing est in commodo consectetur. Tempor Lorem incididunt dolore commodo consequat.</p>
+      <p class="about--text content--section">{{ aboutContent }}</p>
     </section>
     <app-curriculum-vitae></app-curriculum-vitae>
     <app-contact></app-contact>
@@ -96,6 +96,7 @@ import { Pager } from "gridsome";
 import Contact from "./components/Contact.vue";
 import CurriculumVitae from "./components/CurriculumVitae.vue";
 import Landing from "./components/Landing.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -110,7 +111,8 @@ export default {
       loadNav: false,
       sectionHeights: [],
       sectionArray: [],
-      sections: []
+      sections: [],
+      aboutContent: ""
     };
   },
   methods: {
@@ -153,7 +155,7 @@ export default {
 
       Object.entries(page).forEach(set => {
         const tempObj = {
-          name: set[0],
+          name: set[0].replace("allWordPress", ""),
           image: []
         };
         set[1].edges.forEach(post => {
@@ -162,18 +164,12 @@ export default {
             alt: "a sick photo"
           };
           tempObj.image.push(imageObj);
-          console.log("imageobj", imageObj);
         });
-        console.log("tempobj", tempObj);
-        console.log("obj", mainobj);
 
         mainobj.push(tempObj);
-        console.log(set);
       });
-      console.log("obj", mainobj);
 
       this.sections = mainobj;
-      console.log("section", this.sections);
     },
     loadFullNav() {
       this.loadNav = true;
@@ -185,6 +181,25 @@ export default {
     this.isMounted = true;
     this.$nextTick(this.measureSectionHeader);
     this.$nextTick(this.measureAllElements);
+    axios
+      .get("/pages/40")
+      .then(res => {
+        console.log(res);
+
+        this.aboutContent = res.data.acf.content;
+      })
+      .catch(err => console.log(err));
+  },
+  filters: {
+    unCamelCase(str) {
+      str = str.replace(/([a-z\xE0-\xFF])([A-Z\xC0\xDF])/g, "$1 $2"); //add space between camelCase text
+
+      // str = str.toLowerCase(); // to lower case if needed
+      if (str === "Social Mobile") {
+        return str.split(" ").join(" & ");
+      }
+      return str;
+    }
   }
 };
 </script>
