@@ -1,5 +1,6 @@
 <template>
-  <div class="landing" ref='landingpage'>
+<section>
+   <div class="landing" ref='landingpage'>
     <div class="landing__container">
       <div class="landing__container__text" ref='text'>
         <h1 class="dima" ref="dima"><span class="underline" ref="firstletter">D</span><span class="after" ref="aftertext">ima</span></h1>
@@ -7,6 +8,8 @@
       </div>
     </div>
   </div>
+</section>
+ 
 </template>
 
 <script>

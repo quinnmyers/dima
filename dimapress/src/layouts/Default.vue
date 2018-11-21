@@ -167,63 +167,61 @@ export default {
     sectionLocation(p) {
       if (p >= this.startEndArray[0].start && p <= this.startEndArray[0].end) {
         let targetExpansionDiv = this.$refs.expansiondiv[0];
-        let currentSectionPercent = this.percentArray[0];
-        let differenceOfPercent = 100 / currentSectionPercent;
-        let adjustedScrollPosition = p * differenceOfPercent;
-        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        // targetExpansionDiv.style.width = `100%`;
+        console.log(p);
+        // let currentSectionPercent = this.percentArray[0];
+        // let differenceOfPercent = 100 / currentSectionPercent;
+        // let adjustedScrollPosition = p * differenceOfPercent;
+        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        targetExpansionDiv.style.width = `100%`;
       } else if (
         p >= this.startEndArray[1].start &&
         p <= this.startEndArray[1].end
       ) {
         let targetExpansionDiv = this.$refs.expansiondiv[1];
         let currentSectionPercent = this.percentArray[1];
-        let startingPoint = this.startEndArray[1].start;
-        let differenceOfPercent = 100 / currentSectionPercent;
-        let adjustedScrollPosition =
-          p * differenceOfPercent - startingPoint * differenceOfPercent;
-        console.log("you are in the second section");
-        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        // targetExpansionDiv.style.width = `100%`;
+        // let startingPoint = this.startEndArray[1].start;
+        // let differenceOfPercent = 100 / currentSectionPercent;
+        // let adjustedScrollPosition =
+        //   p * differenceOfPercent - startingPoint * differenceOfPercent;
+        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        targetExpansionDiv.style.width = `100%`;
       } else if (
         p >= this.startEndArray[2].start &&
         p <= this.startEndArray[2].end
       ) {
         let targetExpansionDiv = this.$refs.expansiondiv[2];
         let currentSectionPercent = this.percentArray[2];
-        let startingPoint = this.startEndArray[2].start;
-        let differenceOfPercent = 100 / currentSectionPercent;
-        let adjustedScrollPosition =
-          p * differenceOfPercent - startingPoint * differenceOfPercent;
-        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        // targetExpansionDiv.style.width = `100%`;
-        console.log("you are in the THIRD section");
+        // let startingPoint = this.startEndArray[2].start;
+        // let differenceOfPercent = 100 / currentSectionPercent;
+        // let adjustedScrollPosition =
+        //   p * differenceOfPercent - startingPoint * differenceOfPercent;
+        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        targetExpansionDiv.style.width = `100%`;
       } else if (
         p >= this.startEndArray[3].start &&
         p <= this.startEndArray[3].end
       ) {
         let targetExpansionDiv = this.$refs.expansiondiv[3];
-        let currentSectionPercent = this.percentArray[3];
-        let startingPoint = this.startEndArray[3].start;
-        let differenceOfPercent = 100 / currentSectionPercent;
-        let adjustedScrollPosition =
-          p * differenceOfPercent - startingPoint * differenceOfPercent;
-        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        // targetExpansionDiv.style.width = `100%`;
-        console.log("you are in the FOURTH section");
+        // let currentSectionPercent = this.percentArray[3];
+        // let startingPoint = this.startEndArray[3].start;
+        // let differenceOfPercent = 100 / currentSectionPercent;
+        // let adjustedScrollPosition =
+        //   p * differenceOfPercent - startingPoint * differenceOfPercent;
+        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        targetExpansionDiv.style.width = `100%`;
+        // console.log("you are in the FOURTH section");
       } else if (
         p >= this.startEndArray[4].start &&
         p <= this.startEndArray[4].end
       ) {
         let targetExpansionDiv = this.$refs.expansiondiv[4];
-        let currentSectionPercent = this.percentArray[4];
-        let startingPoint = this.startEndArray[4].start;
-        let differenceOfPercent = 100 / currentSectionPercent;
-        let adjustedScrollPosition =
-          p * differenceOfPercent - startingPoint * differenceOfPercent;
-        targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
-        // targetExpansionDiv.style.width = `100%`;
-        console.log("you are in the FIFTH section");
+        // let currentSectionPercent = this.percentArray[4];
+        // let startingPoint = this.startEndArray[4].start;
+        // let differenceOfPercent = 100 / currentSectionPercent;
+        // let adjustedScrollPosition =
+        //   p * differenceOfPercent - startingPoint * differenceOfPercent;
+        // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
+        targetExpansionDiv.style.width = `100%`;
       }
     },
     throttle(fn, wait) {
@@ -277,10 +275,10 @@ export default {
     this.isMounted = true;
     this.$nextTick(console.log("layout: " + this.layoutSectionArray));
     this.$nextTick(this.measureWindow);
-    this.$nextTick(
-      window.addEventListener("scroll", this.determineScrollLocation)
-      //this.throttle(this.determineScrollLocation, 25)
-    );
+    // this.$nextTick(
+    //   window.addEventListener("scroll", this.determineScrollLocation)
+    //   //this.throttle(this.determineScrollLocation, 25)
+    // );
     this.$nextTick(this.loadLine);
     setTimeout(() => {
       this.$nextTick(this.loadHeader);
