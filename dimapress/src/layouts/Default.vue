@@ -266,6 +266,7 @@ export default {
         .reduce((a, b) => a + b, 0);
       console.log(`total from reduce: ${this.totalSectionHeight}`);
       this.calculatePercents();
+      console.log("section array layout: " + this.layoutSectionArray);
     },
     loadNav: function() {
       this.loadFullNav();
