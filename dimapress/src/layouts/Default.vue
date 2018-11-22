@@ -251,7 +251,23 @@ export default {
       this.$refs.navline.classList.add("line-loaded");
     },
     loadHeader() {
-      this.$refs.header.classList.add("header-loaded");
+      if (window.matchMedia("(max-width: 680px)").matches) {
+        /* The viewport is less than, or equal to, 700 pixels wide */
+        console.log("viewport is LESSSS THAN 700");
+      } else {
+        /* The viewport is greater than 700 pixels wide */
+        this.$refs.header.classList.add("header-loaded");
+        console.log("viewport is MOREEEEEEE THAN 700");
+      }
+      // if (window.matchMedia("(min-width: 400px)")) {
+      //   console.log("DID run");
+      // this.isOnPhone = false;
+      // console.log(this.isOnPhone);
+      // } else {
+      //   console.log("didn't run");
+      //   // this.isOnPhone = true;
+      //   // console.log(this.isOnPhone);
+      // }
     },
     loadFullNav() {
       setTimeout(() => {
@@ -282,14 +298,7 @@ export default {
     // );
     this.$nextTick(this.loadLine);
     setTimeout(() => {
-      if (window.matchMedia("(max-width: 400px)").matches) {
-        this.$nextTick(this.loadHeader);
-        // this.isOnPhone = false;
-        // console.log(this.isOnPhone);
-      } else {
-        // this.isOnPhone = true;
-        // console.log(this.isOnPhone);
-      }
+      this.$nextTick(this.loadHeader);
     }, 1500);
   }
 };
@@ -327,8 +336,7 @@ html
 
 .header-expanded 
   // display: flex !important
-  transform: translateX(0%) !important
-  // transform: rotateY(0deg) !important
+  transform: rotateY(0deg) !important
   top: 0 !important
   margin-left: 0px !important
   position: fixed !important
@@ -337,7 +345,7 @@ html
   height: 100%
   width: 100%
   .header-loaded 
-    transform: rotateY(0deg)
+    transform: translateX(0) !important
   &__header 
     display: block
     flex-direction: column
@@ -346,14 +354,14 @@ html
     top: 0
     width: 225px 
     height: 100vh
-    //border-left: 5px solid black
     transition: all 1s ease
     transform: rotateY(90deg)
     transform-origin: top left
+    oveflow-x: hidden
     @include tablet-portrait 
       width: 180px
     @include navsnap 
-      transform: translateX(-100%)
+      transform: rotateY(90deg)
       z-index: 999
       position: fixed
       margin: auto
