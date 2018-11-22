@@ -29,10 +29,10 @@
 </template>
 
 <page-query>query Home{
-  allWordPressVisualDevelopment{
-    		name:edges{node{path}}
+allWordPressVisualDevelopment{
     edges{
       node{
+        title
         featuredMedia{
           url
         }
@@ -40,9 +40,9 @@
     }
   }
   allWordPressIllustration{
-    		name:edges{node{path}}
        edges{
       node{
+        title
         featuredMedia{
           url
         }
@@ -50,12 +50,9 @@
     }
   }
   allWordPressSketches{
-    		name:edges{node{path}}
-
     edges{
-  	    
     node{
-
+			title
       featuredMedia{
         url
       }
@@ -63,10 +60,9 @@
   }
   }
    allWordPressSocialMobile{
-		name:edges{node{path}} 
        edges{
       node{
-        path
+        title
         featuredMedia{
           url
         }
@@ -75,9 +71,9 @@
   
   }
   allWordPressMarketingPosters{
-    		name:edges{node{path}}
        edges{
       node{
+        title
         featuredMedia{
           url
         }
@@ -86,8 +82,6 @@
   
   }
 }
-
-
 </page-query>
 <script>
 import { Pager } from "gridsome";
@@ -159,7 +153,7 @@ export default {
         set[1].edges.forEach(post => {
           const imageObj = {
             url: post.node.featuredMedia.url.src,
-            alt: "a sick photo"
+            alt: post.node.title
           };
           tempObj.image.push(imageObj);
         });
