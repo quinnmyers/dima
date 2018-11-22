@@ -384,6 +384,7 @@ html
       &__brand 
         margin-left: 20px
         font-size: 2rem
+        margin-top: 15px
         // opacity: 0
         // transition: all .3s ease
         .underline 
@@ -402,7 +403,6 @@ html
       &__desktopnav
         display: flex 
         flex-direction: column
-        margin-top: 20px
         .navitem-text 
           margin-left: 20px
         &__navitem, a, &__:visited, .navitem-text
@@ -425,7 +425,9 @@ html
         font-family: $sans-serif
         font-size: 0.9rem 
         color: $grey
-        &__subitem 
+        margin-bottom: 15px
+        &__subitem, a, &__subitem:visited
+          text-decoration: none
           display: flex 
           flex-direction: column 
           align-self: flex-start
