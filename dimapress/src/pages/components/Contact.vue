@@ -40,7 +40,7 @@
            </div>
         </div>
         <div class="contact__container__right">
-          <form :action="{ email }" method="POST">
+          <form :action="`https://formspree.io/${email}`" method="POST">
             <label for="name">Your Name</label>
             <input class="input" type="text" name="name">
             <label for="_replyto">Your Email</label>

@@ -7,15 +7,18 @@
         <header class="layout__header" ref="header">
             <!-- <g-link :to="{ name: 'home' }">Gridsome</g-link> -->
           <nav class="layout__header__nav" ref='mainnav'>
-            <div class="layout__header__nav__brand" ref="navbrand">
-              <h2 class="dima"><span class="underline">D</span>ima</h2>
-              <h2 class="duchet"><span class="underline">D</span>uchet</h2>
-            </div>
+            <a href="#visualdevelopment" v-smooth-scroll="{ duration: 1500}">
+              <div class="layout__header__nav__brand" ref="navbrand">
+                <h2 class="dima"><span class="underline">D</span>ima</h2>
+                <h2 class="duchet"><span class="underline">D</span>uchet</h2>
+              </div>
+            </a>
             <ul class="layout__header__nav__desktopnav">
               <li class="layout__header__nav__desktopnav__navitem"
                   v-for='(n, index) in navItems'
                   :key='index'
-                  ref="navitem">
+                  ref="navitem"
+                  @click="selectNavItem(index)">
                   <a :href="n.url" 
                       v-smooth-scroll="{ duration: 1500}"><span class='navitem-text'>{{ n.name }}</span></a>
                   <div :class="`expansion-div-${index} expansion-div`" :ref='`expansiondiv`'></div>
@@ -25,11 +28,12 @@
               <li class="layout__header__nav__subnav__subitem"
                   v-for="(s,index) in subNavItems"
                   :key="index"
-                  ref="navitem">
+                  ref="navitem"
+                  @click="selectSubNavItem(index)">
                    <a :href="s.url" v-smooth-scroll="{ duration: 1500}">
                      <span class='navitem-text'>{{ s.name }}</span>
                     </a>
-                  <div :class="`expansion-div ${index}`"></div>
+                  <div :class="`expansion-div ${index}`" :ref='`expansiondiv`'></div>
               </li>
             </ul>
             <!-- <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
@@ -165,8 +169,6 @@ export default {
       let percentScrolled = 100 * (scrolledDistance / scrollableDistance);
       this.sectionLocation(percentScrolled);
     },
-    ///change where the div is at the end of the function? so that way it starts at 100% on the way back down
-    // flex-end at the end, etc
     sectionLocation(p) {
       if (p >= this.startEndArray[0].start && p <= this.startEndArray[0].end) {
         let targetExpansionDiv = this.$refs.expansiondiv[0];
@@ -254,28 +256,34 @@ export default {
     },
     loadHeader() {
       if (window.matchMedia("(max-width: 680px)").matches) {
-        /* The viewport is less than, or equal to, 700 pixels wide */
-        console.log("viewport is LESSSS THAN 700");
       } else {
-        /* The viewport is greater than 700 pixels wide */
         this.$refs.header.classList.add("header-loaded");
-        console.log("viewport is MOREEEEEEE THAN 700");
       }
-      // if (window.matchMedia("(min-width: 400px)")) {
-      //   console.log("DID run");
-      // this.isOnPhone = false;
-      // console.log(this.isOnPhone);
-      // } else {
-      //   console.log("didn't run");
-      //   // this.isOnPhone = true;
-      //   // console.log(this.isOnPhone);
-      // }
     },
     loadFullNav() {
       setTimeout(() => {
         this.$refs.mainnav.classList.add("mainnav-full");
         this.$refs.navbrand.classList.add("navbrand-full");
       }, 250);
+    },
+    selectNavItem(i) {
+      console.log(i);
+      const limit = this.$refs.expansiondiv.length;
+      for (let x = 0; x < limit; x++) {
+        const expansion = this.$refs.expansiondiv[x];
+        expansion.style.width = "0%";
+      }
+      const el = (this.$refs.expansiondiv[i].style.width = "100%");
+    },
+    selectSubNavItem(i) {
+      const numberOfNav = this.navItems.length;
+      const index = i + numberOfNav;
+      const limit = this.$refs.expansiondiv.length;
+      for (let x = 0; x < limit; x++) {
+        const expansion = this.$refs.expansiondiv[x];
+        expansion.style.width = "0%";
+      }
+      const el = (this.$refs.expansiondiv[index].style.width = "100%");
     }
   },
   watch: {
@@ -379,14 +387,16 @@ html
       height: 100%
       transition: all .3s ease
       //padding and margins for both lists of navitems
+      a, a:visited
+        color: black
+        text-decoration: none 
+        cursor: pointer
       .navbrand-full 
         // opacity: 1
-      &__brand 
+      &__brand
         margin-left: 20px
         font-size: 2rem
         margin-top: 15px
-        // opacity: 0
-        // transition: all .3s ease
         .underline 
           text-decoration: underline 
           text-decoration-color: $accent
@@ -400,6 +410,7 @@ html
           background: $accent
           height: 2px
           width: 0%
+          transition: all 0.2s ease 
       &__desktopnav
         display: flex 
         flex-direction: column
