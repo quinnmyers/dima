@@ -59,6 +59,7 @@ export default {
   data() {
     return {
       isMounted: false,
+      isOnPhone: false,
       lastSectionTargeted: "",
       windowHeight: 0,
       percentArray: [],
@@ -266,7 +267,6 @@ export default {
         .reduce((a, b) => a + b, 0);
       console.log(`total from reduce: ${this.totalSectionHeight}`);
       this.calculatePercents();
-      console.log("section array layout: " + this.layoutSectionArray);
     },
     loadNav: function() {
       this.loadFullNav();
@@ -282,7 +282,14 @@ export default {
     // );
     this.$nextTick(this.loadLine);
     setTimeout(() => {
-      this.$nextTick(this.loadHeader);
+      if (window.matchMedia("(max-width: 400px)").matches) {
+        this.$nextTick(this.loadHeader);
+        // this.isOnPhone = false;
+        // console.log(this.isOnPhone);
+      } else {
+        // this.isOnPhone = true;
+        // console.log(this.isOnPhone);
+      }
     }, 1500);
   }
 };
@@ -315,10 +322,13 @@ html
   position: sticky
   top: 0
   transition: all 1.5s ease-in-out
+  @include navsnap 
+    display: none
 
 .header-expanded 
   // display: flex !important
   transform: translateX(0%) !important
+  // transform: rotateY(0deg) !important
   top: 0 !important
   margin-left: 0px !important
   position: fixed !important
