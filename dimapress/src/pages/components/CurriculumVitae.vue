@@ -1,5 +1,5 @@
 <template>
-  <section class="cv">
+  <section class="cv" id="cv">
       <h2 class="section--header">Curriculum Vitae</h2>
       <div class="cv__container">
         <div class="cv__container__education">

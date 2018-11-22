@@ -16,7 +16,7 @@
                   v-for='(n, index) in navItems'
                   :key='index'
                   ref="navitem">
-                  <a :href="buildNavUrl(n.name)" 
+                  <a :href="n.url" 
                       v-smooth-scroll="{ duration: 1500}"><span class='navitem-text'>{{ n.name }}</span></a>
                   <div :class="`expansion-div-${index} expansion-div`" :ref='`expansiondiv`'></div>
               </li>
@@ -26,7 +26,9 @@
                   v-for="(s,index) in subNavItems"
                   :key="index"
                   ref="navitem">
-                  <span class='navitem-text'>{{ s.name }}</span>
+                   <a :href="s.url" v-smooth-scroll="{ duration: 1500}">
+                     <span class='navitem-text'>{{ s.name }}</span>
+                    </a>
                   <div :class="`expansion-div ${index}`"></div>
               </li>
             </ul>
@@ -84,34 +86,34 @@ export default {
         },
         {
           name: "Social & Mobile",
-          url: "#social&mobile",
+          url: "#socialmobile",
           alt: ""
         },
         {
           name: "Marketing Posters",
-          url: "#",
+          url: "#marketingposters",
           alt: ""
         }
       ],
       subNavItems: [
         {
           name: "about",
-          url: "#",
+          url: "#about",
           alt: ""
         },
         {
           name: "cv",
-          url: "#",
+          url: "#cv",
           alt: ""
         },
         {
           name: "contact",
-          url: "#",
+          url: "#contact",
           alt: ""
         },
         {
           name: "top",
-          url: "#",
+          url: "#visualdevelopment",
           alt: ""
         }
       ]

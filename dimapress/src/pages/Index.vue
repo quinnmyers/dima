@@ -13,14 +13,12 @@
       <div class="image__container" 
            ref='imagecontainer'>
         <div v-for="(image, index) in section.image" :key="index">
-              {{ index }}
             <img :src="image.url" :alt="image.alt">
-              <hr>
             </div>
       </div>
             
     </section>
-    <section class="about">
+    <section class="about" id="about">
       <h2 class="section--header">About</h2>
       <p class="about--text content--section">{{ aboutContent }}</p>
     </section>
@@ -215,6 +213,10 @@ section
     padding: 0px 10px
   img 
     width: 100%
+    margin: 15px 0px
+    @include navsnap 
+      margin: 8px 0px
+    
 .content--section 
   max-width: 80%
   @include edgesnap 
