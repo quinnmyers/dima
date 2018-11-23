@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -89,6 +91,19 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    axios
+      .get("/pages/118")
+      .then(res => {
+        console.log(res);
+        this.email = res.data.acf.email;
+        this.blog = res.data.acf.blog_link;
+        this.socialLinks[0].url = be_link;
+        this.socialLinks[1].url = linkedin;
+        this.socialLinks[2].url = insta;
+      })
+      .catch(err => console.log(err));
   }
 };
 </script>
