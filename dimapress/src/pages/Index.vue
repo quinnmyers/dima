@@ -39,7 +39,7 @@ allWordPressVisualDevelopment{
       }
     }
   }
-  allWordPressIllustration{
+   allWordPressIllustration{
        edges{
       node{
         title
@@ -49,7 +49,7 @@ allWordPressVisualDevelopment{
       }
     }
   }
-  allWordPressSketches{
+   allWordPressSketches{
     edges{
     node{
 			title
@@ -81,6 +81,8 @@ allWordPressVisualDevelopment{
     }
   
   }
+ 
+ 
 }
 </page-query>
 <script>
@@ -157,7 +159,7 @@ export default {
           };
           tempObj.image.push(imageObj);
         });
-
+        tempObj.image.reverse();
         mainobj.push(tempObj);
       });
 
@@ -203,10 +205,16 @@ export default {
 section 
 .section--header
 .image__container
+  display: flex
+  align-items: center
+  width: 100% 
+  flex-direction: column
   @include navsnap 
     padding: 0px 10px
   img 
-    width: 100%
+    display: flex 
+    flex-basis: wrap
+    max-width: 100%
     margin: 15px 0px
     @include navsnap 
       margin: 8px 0px
