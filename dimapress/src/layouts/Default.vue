@@ -18,7 +18,7 @@
                   v-for='(n, index) in navItems'
                   :key='index'
                   ref="navitem"
-                  @click="selectNavItem(index)">
+                  @click="[selectNavItem(index), closeMobileNav()]">
                   <a :href="n.url" 
                       v-smooth-scroll="{ duration: 1500}"><span class='navitem-text'>{{ n.name }}</span></a>
                   <div :class="`expansion-div-${index} expansion-div`" :ref='`expansiondiv`'></div>
@@ -29,7 +29,7 @@
                   v-for="(s,index) in subNavItems"
                   :key="index"
                   ref="navitem"
-                  @click="selectSubNavItem(index)">
+                  @click="[selectSubNavItem(index), closeMobileNav()]">
                    <a :href="s.url" v-smooth-scroll="{ duration: 1500}">
                      <span class='navitem-text'>{{ s.name }}</span>
                     </a>
@@ -249,6 +249,14 @@ export default {
         console.log("nav COLLAPSED now");
         document.body.style.height = "auto";
         document.body.style.overflow = "auto";
+      }
+    },
+    closeMobileNav() {
+      const el = this.$refs.header;
+      if (el.classList.contains("header-expanded")) {
+        el.classList.remove("header-expanded");
+      } else {
+        return;
       }
     },
     loadLine() {
