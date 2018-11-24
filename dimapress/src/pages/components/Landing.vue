@@ -61,6 +61,8 @@ export default {
     justify-content: flex-end
     .text-out 
       transform: translateX(1000px) !important
+      @include phone-large 
+        transform: translateX(600px) !important
     .text-loaded 
       transform: translateY(0)
     &__text
@@ -71,6 +73,14 @@ export default {
       transform: translateY(100%)
       overflow: hidden
       font-size: 5rem
+      @include edgesnap 
+        font-size: 4rem
+        margin-right: 50px
+      @include tablet-portrait 
+        font-size: 3.25rem
+      @include phone-large 
+        margin-top: 100px
+        font-size: 2rem
       .underline 
         text-decoration: underline 
         text-decoration-color: $accent

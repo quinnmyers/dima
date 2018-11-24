@@ -438,6 +438,10 @@ html
             color: black
           @include tablet-portrait 
             font-size: 11pt
+          @include phone
+            font-size: 0.85rem
+          @include phone-small 
+            font-size: 0.8rem
       &__subnav
         display: flex 
         flex-direction: column 
@@ -457,6 +461,10 @@ html
             color: black
           @include tablet-portrait
             font-size: 0.85rem
+          @include phone 
+            font-size: 0.775rem
+          @include phone-small 
+            font-size: 0.725rem
   .mobile__nav__expander
     display: flex 
     flex-direction: column
@@ -473,7 +481,8 @@ html
     display: none
     flex-direction: column 
     justify-content: center
-    align-items: center
+    align-items: flex-end 
+    margin-right: 10px
     background: white
     height: 45px 
     width: 90px 
@@ -486,8 +495,8 @@ html
     .line1, .line2, .line3
       display: flex
       background: black
-      height: 2px 
-      width: 40px
+      height: 1px 
+      width: 30px
     .line1 
       margin-top: 3px
     .line2 
