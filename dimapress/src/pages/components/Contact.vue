@@ -96,7 +96,7 @@ export default {
     axios
       .get("/pages/118")
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.email = res.data.acf.email;
         this.blog = res.data.acf.blog_link;
         this.socialLinks[0].url = be_link;

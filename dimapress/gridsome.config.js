@@ -13,5 +13,8 @@ module.exports = {
         }
       }
     }
-  ]
+  ],
+  siteName: "Art of Dima Duchet",
+  siteUrl: "https://www.dimaduchet.com",
+  siteDescription: "Art of Dima Duchet"
 };

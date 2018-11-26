@@ -124,9 +124,7 @@ export default {
     };
   },
   methods: {
-    loadFullNav() {
-      console.log("from papapappapapapa default layout nav");
-    },
+    loadFullNav() {},
     buildNavUrl(str) {
       const urlPath = `#${str.replace(/\s/g, "").toLowerCase()}`;
       return urlPath;
@@ -140,13 +138,9 @@ export default {
         percent =>
           (100 * Math.round((10000 * percent) / this.windowHeight)) / 10000
       );
-      console.log(`calculate percents: ${this.percentArray}`);
-      console.log(`window height: ${this.windowHeight}`);
-      console.log(`sectionheights: ${this.totalSectionHeight}`);
       this.sectionStartEnd(this.percentArray);
     },
     sectionStartEnd(array) {
-      console.log(array);
       let index = 0;
       let totalElementHeights = 0;
       for (var i = 0; i < array.length; i++) {
@@ -172,7 +166,6 @@ export default {
     sectionLocation(p) {
       if (p >= this.startEndArray[0].start && p <= this.startEndArray[0].end) {
         let targetExpansionDiv = this.$refs.expansiondiv[0];
-        console.log(p);
         // let currentSectionPercent = this.percentArray[0];
         // let differenceOfPercent = 100 / currentSectionPercent;
         // let adjustedScrollPosition = p * differenceOfPercent;
@@ -214,7 +207,6 @@ export default {
         //   p * differenceOfPercent - startingPoint * differenceOfPercent;
         // targetExpansionDiv.style.width = `${adjustedScrollPosition}%`;
         targetExpansionDiv.style.width = `100%`;
-        // console.log("you are in the FOURTH section");
       } else if (
         p >= this.startEndArray[4].start &&
         p <= this.startEndArray[4].end
@@ -242,11 +234,9 @@ export default {
       const el = this.$refs.header;
       el.classList.toggle("header-expanded");
       if (el.classList.contains("header-expanded")) {
-        console.log("nav EXPANDED now");
         document.body.style.height = "100vh";
         document.body.style.overflow = "hidden";
       } else {
-        console.log("nav COLLAPSED now");
         document.body.style.height = "auto";
         document.body.style.overflow = "auto";
       }
@@ -275,7 +265,6 @@ export default {
       }, 250);
     },
     selectNavItem(i) {
-      console.log(i);
       const limit = this.$refs.expansiondiv.length;
       for (let x = 0; x < limit; x++) {
         const expansion = this.$refs.expansiondiv[x];
@@ -299,7 +288,6 @@ export default {
       this.totalSectionHeight = this.layoutSectionArray
         .map(element => element.height)
         .reduce((a, b) => a + b, 0);
-      console.log(`total from reduce: ${this.totalSectionHeight}`);
       this.calculatePercents();
     },
     loadNav: function() {
@@ -308,7 +296,6 @@ export default {
   },
   mounted() {
     this.isMounted = true;
-    this.$nextTick(console.log("layout: " + this.layoutSectionArray));
     this.$nextTick(this.measureWindow);
     // this.$nextTick(
     //   window.addEventListener("scroll", this.determineScrollLocation)

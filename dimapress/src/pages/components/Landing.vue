@@ -1,5 +1,5 @@
 <template>
-<section>
+<section v-if="showLanding" ref='landingsection'>
    <div class="landing" ref='landingpage'>
     <div class="landing__container">
       <div class="landing__container__text" ref='text'>
@@ -14,20 +14,37 @@
 
 <script>
 export default {
+  data() {
+    return {
+      showLanding: true
+    };
+  },
   methods: {
     loadText() {
       this.$refs.text.classList.add("text-loaded");
     },
     outroText() {
-      this.$refs.text.classList.add("text-out");
+      const el = this.$refs.text;
+      el.classList.add("text-out");
+      // setTimeout(() => {
+
+      // }, 5000);
     },
     loadFullNav() {
       this.$emit("loadnav");
     },
     hideLanding() {
-      setTimeout(() => {
-        this.$refs.landingpage.style.display = "none";
-      }, 1000);
+      this.showLanding = false;
+      // setTimeout(() => {
+      //   this.$refs.landingpage.style.height = "0px";
+      // }, 3000);
+    },
+    reloadText() {
+      const landingTop = this.$refs.landingsection.getBoundingClientRect().top;
+      const el = this.$refs.text;
+      if (landingTop === 0) {
+        el.classList.remove("text-out");
+      }
     }
   },
   mounted() {
@@ -42,8 +59,9 @@ export default {
         top: window.innerHeight,
         behavior: "smooth"
       });
-      this.hideLanding();
+      // this.hideLanding();
     }, 3000);
+    window.addEventListener("scroll", this.reloadText);
   }
 };
 </script>
@@ -60,7 +78,7 @@ export default {
     display: flex 
     justify-content: flex-end
     .text-out 
-      transform: translateX(1000px) !important
+      transform: translateX(1400px) !important
       @include phone-large 
         transform: translateX(600px) !important
     .text-loaded 
@@ -68,7 +86,7 @@ export default {
     &__text
       display: flex 
       flex-direction: column 
-      //background: pink
+      // background: pink
       transition: all 1.5s ease-in-out
       transform: translateY(100%)
       overflow: hidden

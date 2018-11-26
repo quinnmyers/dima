@@ -128,11 +128,9 @@ export default {
       this.$refs.section.forEach(e => {
         const style = e.currentStyle || window.getComputedStyle(e);
         const eHeight = e.scrollHeight;
-        console.log(eHeight);
         const eMarginBottom = style.marginBottom;
         const eMarginTop = style.marginTop;
         const eTotalHeight = this.getTotal(eHeight, eMarginBottom, eMarginTop);
-        console.log(eTotalHeight);
         this.sectionArray.push({
           id: counter,
           height: eTotalHeight
@@ -171,14 +169,13 @@ export default {
   },
   mounted() {
     this.pushPosts(this.$page);
-    console.log(this.$page);
     this.isMounted = true;
     this.$nextTick(this.measureSectionHeader);
     this.$nextTick(this.measureAllElements);
     axios
       .get("/pages/40")
       .then(res => {
-        console.log(res);
+        // console.log(res);
 
         this.aboutContent = res.data.acf.content;
       })
