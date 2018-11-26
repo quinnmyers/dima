@@ -1,5 +1,5 @@
 <template>
-<section v-if="showLanding" ref='landingsection'>
+<section v-if="isMounted" ref='landingsection'>
    <div class="landing" ref='landingpage'>
     <div class="landing__container">
       <div class="landing__container__text" ref='text'>
@@ -16,7 +16,7 @@
 export default {
   data() {
     return {
-      showLanding: true
+      isMounted: false
     };
   },
   methods: {
@@ -48,7 +48,8 @@ export default {
     }
   },
   mounted() {
-    this.loadText();
+    this.isMounted = true;
+    this.$nextTick(this.loadText);
     setTimeout(() => {
       this.outroText();
       this.loadFullNav();
@@ -86,10 +87,9 @@ export default {
     &__text
       display: flex 
       flex-direction: column 
-      // background: pink
       transition: all 1.5s ease-in-out
       transform: translateY(100%)
-      overflow: hidden
+      //overflow: hidden
       font-size: 5rem
       @include edgesnap 
         font-size: 4rem
