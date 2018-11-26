@@ -8,6 +8,7 @@
       </div>
     </div>
   </div>
+  <a href="#visualdevelopment" ref="scrollto" v-smooth-scroll="{ duration: 1500}" aria-hidden="true"></a>
 </section>
  
 </template>
@@ -56,10 +57,13 @@ export default {
     }, 1800);
 
     setTimeout(() => {
-      window.scroll({
-        top: window.innerHeight,
-        behavior: "smooth"
-      });
+      console.log(this.$refs.scrollto);
+
+      this.$refs.scrollto.click();
+      // window.scroll({
+      //   top: window.innerHeight,
+      //   behavior: "smooth"
+      // });
       // this.hideLanding();
     }, 3000);
     window.addEventListener("scroll", this.reloadText);
