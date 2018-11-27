@@ -39,7 +39,7 @@ allWordPressVisualDevelopment{
       }
     }
   }
-   allWordPressIllustration{
+   allWordPressIllustrations{
        edges{
       node{
         title
