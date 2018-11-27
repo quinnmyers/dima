@@ -79,7 +79,7 @@ export default {
           alt: ""
         },
         {
-          name: "Illustration",
+          name: "Illustrations",
           url: "#illustration",
           alt: ""
         },
