@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <a href="#visualdevelopment" ref="scrollto" v-smooth-scroll="{ duration: 1500}" aria-hidden="true"></a>
+  <a href="#visualdevelopment" ref="scrollto" v-smooth-scroll="{ duration: 900}" aria-hidden="true"></a>
 </section>
  
 </template>
