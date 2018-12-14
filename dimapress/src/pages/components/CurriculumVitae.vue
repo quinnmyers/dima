@@ -1,77 +1,93 @@
 <template>
   <section class="cv" id="cv">
-      <h2 class="section--header">Curriculum Vitae</h2>
-      <div class="cv__container">
-        <div class="cv__container__education">
-          <div class="cv__container__education--subheader"><h3>{{ education.subCategoryTitle }}</h3></div>
-          <div class="cv__container__education__entry"
-               v-for='(e, index) in education.educationEntries'
-               :key="index">
-              <div class="cv__container__education__entry__left">
-                <p><span class="bold-underline">{{ e.title }},</span> {{ e.shortDescription }}</p>
-              </div>
-              <div class="cv__container__education__entry__right">
-                <p><span class="bold">{{ e.dates }}</span></p>
-              </div>
-          </div>
+    <h2 class="section--header">Curriculum Vitae</h2>
+    <div class="cv__container">
+      <div class="cv__container__education">
+        <div class="cv__container__education--subheader">
+          <h3>{{ education.subCategoryTitle }}</h3>
         </div>
-        <div class="cv__container__work">
-          <div class="cv__container__work--subheader"><h3>{{ work.subCategoryTitle }}</h3></div>
-          <div class="cv__container__work__entry"
-               v-for='(w, index) in work.workEntries'
-               :key="index">
-              <div class="cv__container__work__entry__left">
-                <p><span class="bold-underline">{{ w.company }},</span> {{ w.title }}</p>
-              </div>
-              <div class="cv__container__work__entry__right">
-                <p><span class="bold">{{ w.dates }}</span></p>
-              </div>
+        <div
+          class="cv__container__education__entry"
+          v-for="(e, index) in education.educationEntries"
+          :key="index"
+        >
+          <div class="cv__container__education__entry__left">
+            <p>
+              <span class="bold-underline">{{ e.title }},</span>
+              {{ e.shortDescription }}
+            </p>
+          </div>
+          <div class="cv__container__education__entry__right">
+            <p>
+              <span class="bold">{{ e.dates }}</span>
+            </p>
           </div>
         </div>
       </div>
-    </section>
+      <div class="cv__container__work">
+        <div class="cv__container__work--subheader">
+          <h3>{{ work.subCategoryTitle }}</h3>
+        </div>
+        <div class="cv__container__work__entry" v-for="(w, index) in work.workEntries" :key="index">
+          <div class="cv__container__work__entry__left">
+            <p>
+              <span class="bold-underline">{{ w.company }},</span>
+              {{ w.title }}
+            </p>
+          </div>
+          <div class="cv__container__work__entry__right">
+            <p>
+              <span class="bold">{{ w.dates }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       education: {
         subCategoryTitle: "Education",
-        educationEntries: [
-          {
-            title: "Bachelor of Fine Arts",
-            shortDescription: "VFX - Visual Development",
-            dates: "Sep 2009"
-          },
-          {
-            title: "Academy of Art University of San Francisco",
-            shortDescription: "(AAU) San Francisco, CA",
-            dates: "Sep 2005 - Sep 2009"
-          }
-        ]
+        educationEntries: []
       },
       work: {
         subCategoryTitle: "Work Experience",
-        workEntries: [
-          {
-            company: "Bluhare Studios",
-            title: "Lead Artist",
-            dates: "April 2014 - Present"
-          },
-          {
-            company: "Rocket Gaming Systems",
-            title: "Artist & Animator",
-            dates: "Feb 2010 - April 2014"
-          },
-          {
-            company: "Dana Production Co.",
-            title: "Freelance Artist & Animator",
-            dates: "2011 - 2012"
-          }
-        ]
+        workEntries: []
       }
     };
+  },
+  mounted() {
+    axios
+      .get("/cv_work")
+      .then(res => {
+        res.data.forEach(element => {
+          const tempObj = {
+            company: element.company,
+            title: element.position_title,
+            dates: element.dates
+          };
+          this.work.workEntries.push(tempObj);
+        });
+      })
+      .catch(err => console.log(err));
+    axios
+      .get("/cv_school")
+      .then(res => {
+        res.data.forEach(element => {
+          const tempObj = {
+            shortDescription: element.shortdescription,
+            title: element.school_title,
+            dates: element.dates
+          };
+          this.education.educationEntries.push(tempObj);
+        });
+      })
+      .catch(err => console.log(err));
   }
 };
 </script>
