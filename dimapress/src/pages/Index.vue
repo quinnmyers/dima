@@ -1,22 +1,20 @@
 <template>
-  <Layout :layoutSectionArray="sectionArray" :loadNav="loadNav" v-if='isMounted'>
-    <app-landing @loadnav='loadFullNav'></app-landing>
-    <section v-for='(section,index) in sections' 
-            :key="index"
-            :class="createSectionClass(section.name)"
-            :id="createSectionClass(section.name)"
-            ref="section"
-            :data-key="index"
-            >
-            <h2 class="section--header"
-                ref='sectionheader'>{{ section.name | unCamelCase}}</h2>
-      <div class="image__container" 
-           ref='imagecontainer'>
+  <Layout :layoutSectionArray="sectionArray" :loadNav="loadNav" v-if="isMounted">
+    <app-landing @loadnav="loadFullNav"></app-landing>
+    <section
+      v-for="(section,index) in sections"
+      :key="index"
+      :class="createSectionClass(section.name)"
+      :id="createSectionClass(section.name)"
+      ref="section"
+      :data-key="index"
+    >
+      <h2 class="section--header" ref="sectionheader">{{ section.name | unCamelCase}}</h2>
+      <div class="image__container" ref="imagecontainer">
         <div v-for="(image, index) in section.image" :key="index">
-            <img :src="image.url" :alt="image.alt">
-            </div>
+          <img :src="image.url" :alt="image.alt">
+        </div>
       </div>
-            
     </section>
     <section class="about" id="about">
       <h2 class="section--header">About</h2>
@@ -25,7 +23,6 @@
     <app-curriculum-vitae></app-curriculum-vitae>
     <app-contact></app-contact>
   </Layout>
-  
 </template>
 
 <page-query>query Home{
